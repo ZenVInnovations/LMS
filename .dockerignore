@@ -1,0 +1,16 @@
+.git
+.gitignore
+.DS_Store
+node_modules
+vendor
+moodledata/*
+.env
+.env.*
+*.log
+Dockerfile
+docker-compose.yml
+README.md
+CONTRIBUTING.md
+COPYING.txt
+TRADEMARK.txt
+.dockerignore 
