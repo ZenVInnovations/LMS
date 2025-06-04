@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  moodle:
+    build: .
+    container_name: moodle_app
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./moodledata:/var/www/moodledata
+      - ./config.php:/var/www/html/config.php:ro
+      - ./ssl:/etc/apache2/ssl:ro
+    environment:
+      - MOODLE_URL=https://your-domain.com  # Change this to your actual domain
+      - DB_HOST=postgres
+      - DB_NAME=moodle
+      - DB_USER=moodle
+      - DB_PASSWORD=your_strong_password_here  # Change this
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14
+    container_name: moodle_db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=moodle
+      - POSTGRES_USER=moodle
+      - POSTGRES_PASSWORD=your_strong_password_here  # Use same password as above
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:5432:5432"  # Only accessible locally
+
+volumes:
+  pgdata: 
